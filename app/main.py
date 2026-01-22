@@ -2,7 +2,10 @@ from typing import List, Tuple
 
 
 class Battleship:
-    def __init__(self, ships: List[Tuple[Tuple[int, int], Tuple[int, int]]]):
+    def __init__(
+        self,
+        ships: List[Tuple[Tuple[int, int], Tuple[int, int]]]
+    ) -> None:
         self.field = [["~" for _ in range(10)] for _ in range(10)]
         self.ships_decks = []
         self.original_ships = []
@@ -14,7 +17,8 @@ class Battleship:
             for row, col in ship_coords:
                 self.field[row][col] = u"\u25A1"
 
-        self._validate_field(ships)
+        if not self._validate_field(ships):
+            raise ValueError("Invalid ship configuration")
 
     def _get_ship_coordinates(
         self, start: Tuple[int, int], end: Tuple[int, int]
